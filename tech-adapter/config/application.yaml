@@ -1,0 +1,18 @@
+# Default (non-secret) configuration for the Soda Data Quality Tech Adapter.
+#
+# Each top-level key matches exactly a field name of `SodaConfig`
+# (tech-adapter/src/app_config.py), which is loaded via `pydantic-settings`
+# from this file mounted at `config/application.yaml`. Every field can also
+# be overridden individually by an environment variable named `SODA_<FIELD>`
+# (e.g. `base_url` <-> `SODA_BASE_URL`), which always takes precedence over
+# this file.
+#
+# Do NOT put secrets here (api_key_id, api_key_secret): those are injected
+# exclusively via a Kubernetes Secret as SODA_API_KEY_ID / SODA_API_KEY_SECRET
+# environment variables (see values.secretName).
+base_url: "https://cloud.soda.io"
+request_timeout_seconds: 30
+polling_interval_seconds: 5
+polling_max_timeout_seconds: 300
+polling_backoff_multiplier: 1.5
+polling_backoff_max_interval_seconds: 30

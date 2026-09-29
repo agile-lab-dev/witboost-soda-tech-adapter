@@ -1,0 +1,81 @@
+dataProduct:
+  id: urn:dmb:dp:finance:orders:0
+  name: Orders
+  fullyQualifiedName: Orders
+  description: Finance data product with an output port and Soda-managed data quality
+  kind: dataproduct
+  domain: finance
+  version: 0.1.0
+  environment: production
+  dataProductOwner: user:name.surname_agilelab.it
+  dataProductOwnerDisplayName: Name Surname
+  email: name.surname@email.com
+  ownerGroup: name.surname_email.com
+  devGroup: group:dev
+  informationSLA: 2BD
+  maturity: Tactical
+  billing: {}
+  tags: []
+  specific: {}
+  components:
+    - kind: outputport
+      id: urn:dmb:cmp:finance:orders:0:orders-output-port
+      description: Output port exposing the orders table for consumption
+      name: Orders Output Port
+      fullyQualifiedName: Orders Output Port
+      version: 0.0.0
+      infrastructureTemplateId: urn:dmb:itm:databricks-provisioner:1
+      useCaseTemplateId: urn:dmb:utm:databricks-outputport-template-sodaDQ:0.0.0
+      dependsOn: []
+      platform: Azure
+      technology: Databricks
+      outputPortType: SQL
+      creationDate: 2026-01-01T00:00:00.000Z
+      startDate: 2026-01-01T00:00:00.000Z
+      dataContract:
+        schema:
+          - name: transaction_id
+            description: null
+            dataType: STRING
+            tags: []
+          - name: event_date
+            description: null
+            dataType: DATE
+            tags: []
+        quality:
+          - check: |
+              row_count:
+                threshold:
+                  must_be_greater_than: 0
+          - check: |
+              missing:
+            column: transaction_id
+      tags: []
+      sampleData: {}
+      semanticLinking: []
+      specific:
+        catalogName: main
+        schemaName: sales
+        tableName: orders
+      components:
+        - kind: workload
+          id: urn:dmb:cmp:finance:orders:0:orders-output-port:soda-workload
+          description: Workload to monitor Data Contracts using Soda
+          name: Soda Workload
+          fullyQualifiedName: Orders Output Port Soda Workload
+          version: 0.0.0
+          infrastructureTemplateId: urn:dmb:itm:soda-tech-adapter:0
+          useCaseTemplateId: urn:dmb:utm:soda-workload-template:0.0.0
+          dependsOn: []
+          platform: Databricks
+          technology: Soda
+          workloadType: Internal Process
+          connectionType: HOUSEKEEPING
+          tags: []
+          readsFrom: []
+          specific:
+            databricks:
+              dataSourceName: databricks-production
+              outputPortIds:
+                - urn:dmb:cmp:finance:orders:0:orders-output-port
+componentIdToProvision: urn:dmb:cmp:finance:orders:0:orders-output-port:soda-workload

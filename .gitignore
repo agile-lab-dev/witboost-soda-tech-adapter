@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+
+# IntelliJ
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
+.vsls.json
+
+#Drawio bkp
+*.drawio.bkp
+
+**/.python-version
+__pycache__/
+.coverage
+*.xml
+
+
+.env.local
+
+# AI development toolkit (agents, skills, and session decision logs used to
+# develop this adapter).
+.witboost/
+.specify/
+.github/agents/
+.github/skills/
+docs/decisions/
+
+
+# Local, filled-in copies of Helm secret samples
+helm/sample/*-filled*.yaml
+/helm/values-filled.yaml

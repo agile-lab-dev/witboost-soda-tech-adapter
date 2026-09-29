@@ -1,0 +1,309 @@
+# Reference descriptor — Soda Tech Adapter
+#
+# Documentation-only example illustrating the descriptor shape this adapter expects.
+# All values below are placeholders; only the STRUCTURE, field names, and the shape
+# used to discriminate this adapter's component are authoritative.
+#
+# This adapter is invoked for workload components whose
+# `infrastructureTemplateId` equals `urn:dmb:itm:soda-tech-adapter:0`.
+# `componentIdToProvision` in the provisioning request will point at that
+# component's id.
+#
+# CHANGED (2026-09-23): as of the current Databricks output-port + Soda workload
+# templates, the Soda workload is a SUBCOMPONENT nested inside the Databricks
+# output port's own `components` list — it is no longer a top-level sibling in
+# `dataProduct.components[]`. `componentIdToProvision` now points at that nested
+# id. `DataProduct.get_component_by_id` resolves components recursively through
+# nested `components` lists so this lookup works regardless of nesting depth
+# (see `tech-adapter/src/models/data_product_descriptor.py`).
+#
+# Data contract checks and the Soda-specific input have the following shape:
+#   1. `dataContract.schema` accepts two shapes:
+#      - ODCS v3.2 (current output-port template output): a list of TABLES,
+#        each with a `properties` list (columns) and its own `quality` list of
+#        `{id, type, engine, implementation}` objects. `implementation` holds a
+#        raw Soda Contract Language YAML fragment (see
+#        https://docs.soda.io/reference/contract-language-reference). When the
+#        check is column-scoped, `implementation` contains an extra top-level
+#        `column: <name>` key alongside the check-type key, in the SAME YAML
+#        fragment (see the `duplicate` example below) — that is how column
+#        scoping is signaled; when absent, the check is dataset-level.
+#      - Legacy flat shape (still supported): a list of columns directly under
+#        `schema`, plus a top-level `dataContract.quality` list of
+#        `{check, column}` objects.
+#      Both shapes are normalized internally into the same
+#      `dataContract.quality: List[{check, column}]` contract consumed by
+#      validation and Soda contract publishing
+#      (`DataContract.normalize_odcs_v32` in `data_product_descriptor.py`).
+#      Column-level `properties[].tags` accept both the ODCS standard shape
+#      (a plain list of strings, e.g. `tags: [PII, bt2]`) and the legacy
+#      object shape (`{tagFQN, source, labelType, state}`); plain strings
+#      are wrapped into `{"tagFQN": <value>}` (`_normalize_column_tags`).
+#   2. The Soda-specific workload input is nested under a `databricks` key:
+#      `specific.databricks.dataSourceName` / `specific.databricks.outputPortIds`,
+#      since Databricks is currently the only supported target platform.
+#      `outputPortIds` entries must match the referenced output port's
+#      component `id` (`urn:dmb:cmp:...`), not its `dataContract.id`.
+#      `dataSourceName` is an independent, pre-existing Soda Cloud Data Source
+#      name chosen by the product owner; it is not derived from the output
+#      port's catalog/schema naming, even if they coincide in an example.
+#
+# Component kinds present in a real request payload:
+#   - outputport : pre-existing, provisioned by the upstream platform (Databricks)
+#                  Tech Adapter. Provides table metadata (`specific.*`) and the
+#                  data contract with `quality` checks. NOT owned by this adapter.
+#                  Carries the Soda workload as a NESTED subcomponent (see below).
+#   - workload   : the Soda workload itself, nested inside the output port's
+#                  `components` list. THIS is the component this adapter
+#                  provisions, identified by
+#                  `infrastructureTemplateId: urn:dmb:itm:soda-tech-adapter:0`.
+#                  It carries, in turn, a NESTED `components` list containing a
+#                  Guardian workload (see below) — that nested component has a
+#                  DIFFERENT `infrastructureTemplateId`
+#                  (`urn:dmb:itm:databricks-provisioner:1`) and is
+#                  owned/provisioned by the Databricks Tech Adapter, not by this
+#                  one. This adapter must not attempt to provision it and
+#                  should treat it as read-only context (e.g. to correlate the
+#                  Guardian's `__dataContractGuardianSpec.guards[].dataContractId`
+#                  with the Soda contracts it manages).
+
+# Wrapped under `dataProduct:` + sibling `componentIdToProvision:` per the
+# COMPONENT_DESCRIPTOR contract enforced by `unpack_provisioning_request`
+# (tech-adapter/src/dependencies.py).
+dataProduct:
+  dataProductOwnerDisplayName: <owner display name>
+  projectOwner: user:default/<owner-username>
+  projectOwnerDisplayName: <owner display name>
+  environment: production
+  domain: <domain>
+  projectKind: system
+  kind: dataproduct
+  domainId: urn:dmb:dmn:<domain>
+  id: urn:dmb:dp:<domain>:<data-product-name>:0
+  description: <data product description>
+  devGroup: <dev-group>
+  ownerGroup: <owner-group>
+  dataProductOwner: user:default/<owner-username>
+  email: <owner-email>
+  version: 0.0.0
+  fullyQualifiedName: null
+  name: <data-product-name>
+  informationSLA: null
+  maturity: null
+  useCaseTemplateId: urn:dmb:utm:dataproduct-template:0.0.0
+  infrastructureTemplateId: urn:dmb:itm:dataproduct-provisioner:1
+  billing: {}
+  tags: []
+  specific: {}
+  shoppable: false
+  taxonomy:
+    id: urn:dmb:taxonomy:data-mesh-taxonomy
+    name: data-mesh-taxonomy
+  components:
+    # --- outputport (kind: outputport) ---
+    # Not provisioned by this adapter. Referenced by id from the Soda workload's
+    # `specific.databricks.outputPortIds`. Carries the Soda workload nested in
+    # its own `components` list (see below).
+    - kind: outputport
+      id: urn:dmb:cmp:<domain>:<data-product-name>:0:<output-port-id>
+      description: Output Port that exposes information of this Data Product to users
+        and other data products.
+      name: <Output Port name>
+      fullyQualifiedName: <Domain> - <data-product-name> - version 0 - <Output Port name>
+      version: 0.0.0
+      infrastructureTemplateId: urn:dmb:itm:databricks-provisioner:1
+      useCaseTemplateId: urn:dmb:utm:databricks-outputport-template-sodaDQ:0.0.0
+      dependsOn: []
+      platform: Azure
+      technology: Databricks
+      outputPortType: SQL
+      tags: []
+      creationDate: 2026-01-01T00:00:00.000Z
+      startDate: 2026-01-01T00:00:00.000Z
+      processDescription: null
+      __dataContractEnabled: true
+      dataContract:
+        apiVersion: v3.2.0
+        kind: DataContract
+        id: <domain>.<data-product-name>.0.<output-port-id>
+        version: 0.0.0
+        status: active
+        tags: []
+        # ODCS v3.2 shape: a list of tables, each with `properties` (columns)
+        # and its own `quality` list. Flattened internally into
+        # `dataContract.schema` (flat columns) + `dataContract.quality`
+        # (flat `{check, column}` list) — see CHANGED note above.
+        schema:
+          - name: <view-name>
+            physicalName: <view-name>
+            physicalType: view
+            logicalType: object
+            description: <table description>
+            properties:
+              - name: <column-name>
+                logicalType: integer
+                physicalType: INT
+                description: <column description>
+                primaryKey: false
+                required: false
+                unique: false
+                criticalDataElement: false
+                tags: []
+              - name: <column-name-2>
+                logicalType: string
+                physicalType: VARCHAR(100)
+                description: <column description>
+                primaryKey: false
+                required: false
+                unique: false
+                criticalDataElement: false
+                tags: []
+            quality:
+              - id: row_count_1
+                type: custom
+                engine: soda
+                implementation: |
+                  row_count:
+                    threshold:
+                      must_be_greater_than: 0
+              # Column-scoped check: `column` is an extra top-level key inside
+              # the SAME `implementation` YAML fragment, sibling to the
+              # check-type key (`duplicate` here) — not a separate structured
+              # field.
+              - id: duplicate_count_2
+                type: custom
+                engine: soda
+                implementation: |
+                  duplicate:
+                    threshold:
+                      must_be_less_than_or_equal: 0
+                  column: <column-name-2>
+        slaProperties:
+          - id: frequency
+            property: frequency
+            value: null
+            description: How often the data is refreshed.
+          - id: latency
+            property: latency
+            value: null
+            description: Maximum delay between an event occurring and the data being
+              available.
+          - id: availability
+            property: availability
+            value: null
+            description: Uptime of the Output Port.
+      termsAndConditions: null
+      endpoint: null
+      dataSharingAgreement:
+        purpose: null
+        billing: null
+        security: null
+        intendedUsage: null
+        limitations: null
+        lifeCycle: null
+        confidentiality: null
+      sampleData: {}
+      semanticLinking: []
+      specific:
+        workspace: <workspace-name>
+        workspaceOP: <workspace-name>
+        catalogName: <catalog-name>
+        schemaName: <schema-name>
+        tableName: <table-name>
+        metastore: <metastore-name>
+        catalogNameOP: <output-port-catalog-name>
+        schemaNameOP: <output-port-schema-name>
+        viewNameOP: <output-port-view-name>
+        sqlWarehouseName: <sql-warehouse-name>
+      consumable: true
+      shoppable: true
+
+      # --- workload (kind: workload), nested under the output port ---
+      # THIS is the component this adapter provisions, discriminated by
+      # `infrastructureTemplateId: urn:dmb:itm:soda-tech-adapter:0`. It is a
+      # SUBCOMPONENT of the output port above, not a top-level sibling.
+      components:
+        - kind: workload
+          id: urn:dmb:cmp:<domain>:<data-product-name>:0:<output-port-id>:soda-workload
+          description: Soda Data Quality Guardian monitoring the Data Contract of this
+            Output Port
+          name: Soda Workload
+          fullyQualifiedName: <Domain> - <data-product-name> - version 0 - <Output Port
+            name> Soda Workload
+          version: 0.0.0
+          infrastructureTemplateId: urn:dmb:itm:soda-tech-adapter:0
+          useCaseTemplateId: urn:dmb:utm:soda-workload-template:0.0.0
+          dependsOn: []
+          platform: Databricks
+          technology: Soda
+          workloadType: Internal Process
+          connectionType: HOUSEKEEPING
+          tags: []
+          readsFrom: []
+          specific:
+            # Nested under a platform key (`databricks` here) rather than flat.
+            databricks:
+              dataSourceName: <soda-data-source-name> # must match an existing Soda Cloud Data Source; independent of the output port's catalog naming
+              outputPortIds:
+                # Must be the output port's component `id` (`urn:dmb:cmp:...`),
+                # not its `dataContract.id`.
+                - urn:dmb:cmp:<domain>:<data-product-name>:0:<output-port-id>
+          consumable: false
+          shoppable: false
+          # Nested component: a Databricks Guardian job that periodically runs
+          # the Soda checks. Different infrastructureTemplateId => owned by the
+          # Databricks Tech Adapter, NOT by this adapter. Present here only as
+          # read-only context.
+          components:
+            - name: <Output Port name> Soda Guardian Job
+              fullyQualifiedName: <Domain> - <data-product-name> - version 0 - <Output
+                Port name> Soda Guardian Job
+              id: urn:dmb:cmp:<domain>.<data-product-name>.0.<output-port-id>:soda-workload:guardian-job
+              kind: workload
+              description: Databricks job that executes the Soda Data Quality checks and
+                publishes results to Witboost
+              version: 0.0.0
+              infrastructureTemplateId: urn:dmb:itm:databricks-provisioner:1
+              useCaseTemplateId: urn:dmb:utm:databricks-guardian-sodaDQ:0.0.0
+              consumable: false
+              dependsOn: []
+              platform: Azure
+              technology: Databricks
+              workloadType: Internal Process
+              connectionType: HOUSEKEEPING
+              __dataContractGuardianSpec:
+                guards:
+                  - dataContractId: urn:dmb:cmp:<domain>:<data-product-name>:0:<output-port-id>
+                    monitoringSchedule:
+                      frequency: 0 0 0 * * ?
+                      tolerancyWindowLength: PT1D
+                dataSourceName: <soda-data-source-name>
+              specific:
+                workspace: <workspace-name>
+                jobName: <generated-job-name>
+                description: Soda Data Quality Guardian job for <Output Port name>
+                repoPath: <repo-path>
+                metastore: <metastore-name>
+                runAsPrincipalName: null
+                git:
+                  gitRepoUrl: <git-repo-url>
+                  gitReference: master
+                  gitReferenceType: BRANCH
+                  gitPath: guardian_notebook/soda_guardian.py
+                scheduling:
+                  cronExpression: 0 0 0 * * ?
+                  javaTimezoneId: UTC
+                executionMode: warehouse
+                sqlWarehouseName: <sql-warehouse-name>
+              shoppable: false
+  witboost:
+    deploymentStatus:
+      development: not-deployed
+      qa: not-deployed
+      production: not-deployed
+
+# componentIdToProvision points at the nested Soda workload above — the one
+# with infrastructureTemplateId: urn:dmb:itm:soda-tech-adapter:0, nested inside
+# the output port's `components` list — never at the output port itself nor at
+# the further-nested Guardian sub-component.
+componentIdToProvision: urn:dmb:cmp:<domain>:<data-product-name>:0:<output-port-id>:soda-workload

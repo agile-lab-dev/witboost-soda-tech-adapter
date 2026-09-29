@@ -1,0 +1,9 @@
+apiVersion: v2
+name: soda-tech-adapter
+description: Helm chart for the Soda Data Quality Tech Adapter
+type: application
+version: 0.0.1
+appVersion: "0.0.1"
+maintainers:
+  - name: AgileLab
+    url: http://agilelab.it
