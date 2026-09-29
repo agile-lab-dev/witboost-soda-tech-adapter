@@ -1,0 +1,264 @@
+<mxfile host="Electron" agent="GitHub Copilot">
+  <diagram id="soda-hld-architecture" name="Databricks End-to-End">
+    <mxGraphModel dx="2054" dy="1136" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wb-container" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="140" width="1640" x="80" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wb-label" parent="1" style="text;html=1;align=center;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;fontColor=#4a235a;" value="&lt;b&gt;WITBOOST PLATFORM&lt;/b&gt;" vertex="1">
+          <mxGeometry height="28" width="220" x="780" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="wb-coord" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="&lt;b&gt;Provisioning&lt;br&gt;Coordinator&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="740" x="342" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wb-cg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="&lt;b&gt;Computational&lt;br&gt;Governance&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="1350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="wb-mkt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="&lt;b&gt;Marketplace&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(DC Status)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1550" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="user" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" value="DP Team" vertex="1">
+          <mxGeometry height="50" width="50" x="100" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-user" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#4a235a;" target="wb-coord" value="Deploy &#xa;Data Product" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prov-section" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=light-dark(#AAAAAA,#97D077);arcSize=4;dashed=1;dashPattern=12 6;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="386" width="1640" x="80" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="prov-section-label" parent="1" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#777777;" value="&lt;b&gt;DEPLOY TIME&lt;/b&gt;" vertex="1">
+          <mxGeometry height="26" width="99" x="92" y="188" as="geometry" />
+        </mxCell>
+        <mxCell id="dbx-ta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Databricks&lt;br&gt;Tech Adapter&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="140" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="dbx-resource" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="&lt;b&gt;Databricks Views&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Unity Catalog)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="150" x="145" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-wb-dbx" edge="1" parent="1" source="wb-coord" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="dbx-ta" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-wb-dbx-lbl" connectable="0" parent="arrow-wb-dbx" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;" value="&lt;b&gt;1.&lt;/b&gt; Deploy" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-4" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-dbx-ta-res" edge="1" parent="1" source="dbx-ta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;" target="dbx-resource" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-dbx-ta-res-lbl" connectable="0" parent="arrow-dbx-ta-res" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=9;labelBackgroundColor=#ffffff;" value="Creates" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="soda-ta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Soda&lt;br&gt;Tech Adapter&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="531" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="soda-cloud-prov" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Soda Cloud&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Dataset + Data Contract&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="526" y="424" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-wb-soda" edge="1" parent="1" source="wb-coord" style="rounded=0;strokeWidth=2;strokeColor=#d79b00;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="soda-ta" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="712" y="205.5" />
+              <mxPoint x="611" y="205.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-wb-soda-lbl" connectable="0" parent="arrow-wb-soda" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;" value="&lt;b&gt;2.&lt;/b&gt; Deploy" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-11" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-soda-ta-res" edge="1" parent="1" source="soda-ta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#d79b00;" target="soda-cloud-prov" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="soda-steps" parent="1" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];fontSize=9;" value="&lt;i&gt;1. Find Data Source&lt;br&gt;2. Discover table&lt;br&gt;3. Onboard dataset&lt;br&gt;4. Create + publish Data Contract&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="630" y="347" as="geometry" />
+        </mxCell>
+        <mxCell id="guardian-ta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Databricks&lt;br&gt;Tech Adapter&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="922" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="guardian-job" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="&lt;b&gt;Databricks Job&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Guardian)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="912" y="424" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-wb-guardian" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#82b366;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="guardian-ta" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="928" y="129.5" />
+              <mxPoint x="928" y="203.3" />
+              <mxPoint x="1002" y="203.3" />
+            </Array>
+            <mxPoint x="930" y="129.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-wb-guardian-lbl" connectable="0" parent="arrow-wb-guardian" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;" value="&lt;b&gt;3.&lt;/b&gt; Deploy" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-guardian-ta-res" edge="1" parent="1" source="guardian-ta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#82b366;" target="guardian-job" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-guardian-ta-res-lbl" connectable="0" parent="arrow-guardian-ta-res" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=9;labelBackgroundColor=#ffffff;" value="Creates Job" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id-map-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#CCCCCC;fontSize=9;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" value="&lt;b style=&quot;font-size:10px&quot;&gt;ID Mapping&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(via provisionInfo / enriched descriptor)&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font face=&quot;monospace&quot;&gt;outputPortId&lt;/font&gt; (Witboost)&lt;br&gt;&lt;font face=&quot;monospace&quot;&gt;sodaContractId&lt;/font&gt; (Soda)&lt;br&gt;&lt;font face=&quot;monospace&quot;&gt;sodaDatasetId&lt;/font&gt;&amp;nbsp;(Soda)&lt;br&gt;&amp;nbsp;&amp;nbsp;↓&lt;br&gt;passed to Guardian via&lt;br&gt;enriched descriptor" vertex="1">
+          <mxGeometry height="150" width="180" x="1245" y="307" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-soda-provinfo" edge="1" parent="1" source="soda-ta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#999999;dashed=1;dashPattern=8 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.588;entryY=0.992;entryDx=0;entryDy=0;entryPerimeter=0;" target="wb-coord" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600.63" y="313.48" as="sourcePoint" />
+            <mxPoint x="578.005" y="134.99999999999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-soda-provinfo-lbl" connectable="0" parent="arrow-soda-provinfo" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=9;labelBackgroundColor=#ffffff;fontColor=light-dark(#000000,#594300);" value="&lt;b&gt;provisionInfo&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;(sodaContractId, sodaDatasetId)&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="5" y="-44" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="guardian-job-idmap" edge="1" parent="1" source="guardian-job" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=none;endFill=0;strokeColor=#ABABAB;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="id-map-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rt-section" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#AAAAAA;arcSize=4;dashed=1;dashPattern=12 6;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="540" width="1640" x="80" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="rt-section-label" parent="1" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#777777;" value="&lt;b&gt;PERIODIC EXECUTION - Databricks job&lt;/b&gt;" vertex="1">
+          <mxGeometry height="26" width="243" x="100" y="616" as="geometry" />
+        </mxCell>
+        <mxCell id="dp-container" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#BBBBBB;arcSize=6;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="377" width="511" x="89" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="dp-label" parent="1" style="text;html=1;align=center;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#333333;" value="&lt;b&gt;Data Product: Finance&lt;/b&gt;" vertex="1">
+          <mxGeometry height="28" width="200" x="230" y="678" as="geometry" />
+        </mxCell>
+        <mxCell id="dc-orders" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Orders&lt;/b&gt; Data Contract" vertex="1">
+          <mxGeometry height="40" width="200" x="145" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="dc-customers" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Customers&lt;/b&gt; Data Contract" vertex="1">
+          <mxGeometry height="40" width="200" x="145" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="dc-products" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;Products&lt;/b&gt; Data Contract" vertex="1">
+          <mxGeometry height="40" width="200" x="145" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl-orders" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="&lt;b&gt;orders&lt;/b&gt;" vertex="1">
+          <mxGeometry height="46" width="90" x="433" y="727" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl-customers" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="&lt;b&gt;customers&lt;/b&gt;" vertex="1">
+          <mxGeometry height="46" width="90" x="433" y="787" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl-products" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="&lt;b&gt;products&lt;/b&gt;" vertex="1">
+          <mxGeometry height="46" width="90" x="433" y="847" as="geometry" />
+        </mxCell>
+        <mxCell id="ln-ord" edge="1" parent="1" source="dc-orders" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#CCCCCC;dashed=1;" target="tbl-orders" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ln-cust" edge="1" parent="1" source="dc-customers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#CCCCCC;dashed=1;" target="tbl-customers" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ln-prod" edge="1" parent="1" source="dc-products" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#CCCCCC;dashed=1;" target="tbl-products" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="guardian-rt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Data Contract Guardian&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Databricks Job)&lt;br&gt;1 per Data Product&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="420" x="140" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-g-ord" edge="1" parent="1" source="guardian-rt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#82b366;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="dc-orders" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="106" y="968" />
+              <mxPoint x="106" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr-g-cust" edge="1" parent="1" source="guardian-rt" style="rounded=0;strokeWidth=1;strokeColor=#82b366;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="dc-customers" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="106" y="968" />
+              <mxPoint x="106" y="810" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arr-g-prod" edge="1" parent="1" source="guardian-rt" style="rounded=0;strokeWidth=1;strokeColor=#82b366;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="dc-products" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="106" y="968" />
+              <mxPoint x="106" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="soda-cloud-rt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Soda Cloud&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="200" x="780" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="soda-agent-rt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;strokeWidth=2;" value="&lt;b&gt;Soda Agent&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Executes checks on&lt;br&gt;Databricks tables&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="780" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-g-soda" edge="1" parent="1" source="guardian-rt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#d79b00;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="soda-cloud-rt" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="968" />
+              <mxPoint x="700" y="805" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-g-soda-lbl" connectable="0" parent="arrow-g-soda" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;" value="&lt;b&gt;A.&lt;/b&gt; Trigger Soda scans" vertex="1">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint x="-51" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-cloud-agent" edge="1" parent="1" source="soda-cloud-rt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#d79b00;" target="soda-agent-rt" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-agent-tables" edge="1" parent="1" source="soda-agent-rt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=1;strokeColor=#6c8ebf;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="tbl-orders" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="920" />
+              <mxPoint x="620" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-agent-tables-lbl" connectable="0" parent="arrow-agent-tables" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=9;labelBackgroundColor=#ffffff;fontColor=#666666;" value="SQL queries" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N8s1XTDft2jMm7mhGq9G-3" edge="1" parent="1" source="N8s1XTDft2jMm7mhGq9G-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=light-dark(#81b165, #97D077);strokeWidth=2;endArrow=none;endFill=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1006" y="240.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N8s1XTDft2jMm7mhGq9G-1" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontColor=light-dark(#000000,#000000);" value="&lt;span style=&quot;&quot;&gt;&lt;b style=&quot;font-size: 9px; white-space: nowrap;&quot;&gt;enriched descriptor&lt;/b&gt;&lt;br style=&quot;font-size: 9px; white-space: nowrap;&quot;&gt;&lt;font style=&quot;white-space: nowrap; font-size: 8px;&quot;&gt;(includes Soda IDs)&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="79" width="132" x="1074" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="scan-results" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="&lt;b&gt;Scan Results&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Collect and map Soda results&lt;br&gt;to Witboost format&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="217" x="1173" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-soda-results" edge="1" parent="1" source="soda-cloud-rt" style="rounded=0;strokeWidth=2;strokeColor=#82b366;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="scan-results" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-soda-results-lbl" connectable="0" parent="arrow-soda-results" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;" value="&lt;b&gt;B.&lt;/b&gt; Collect results" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-results-wb" edge="1" parent="1" source="scan-results" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeWidth=2;strokeColor=#9673a6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="wb-cg" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1489" y="870" />
+              <mxPoint x="1489" y="222" />
+              <mxPoint x="1425" y="222" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-results-wb-lbl" connectable="0" parent="arrow-results-wb" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;labelBackgroundColor=#ffffff;textShadow=0;" value="&lt;b&gt;C.&lt;/b&gt; Push governance&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;evaluation results" vertex="1">
+          <mxGeometry relative="1" x="0.4" as="geometry">
+            <mxPoint x="-43" y="163" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
